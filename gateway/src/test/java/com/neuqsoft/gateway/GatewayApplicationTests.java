@@ -1,10 +1,10 @@
-package com.neuqsoft.cloudlearn;
+package com.neuqsoft.gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CloudLearnApplicationTests {
+class GatewayApplicationTests {
 
     @Test
     void contextLoads() {
