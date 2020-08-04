@@ -1,9 +1,9 @@
 package com.neuqsoft.hrmanage.config;
 
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -45,9 +45,9 @@ public class Swagger2Config extends WebMvcConfigurationSupport {
 //                为指定包下的controller生成Api文档
 //                .apis(RequestHandlerSelectors.basePackage("com.neuqdoft"))
 //                为添加指定注解的controller生成文档
-//                .apis(RequestHandlerSelectors.withClassAnnotation(Controller.class))
+                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
 //                为添加指定注解的方法生成api文档
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+//                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
 //                为所有的接口生成api文档
 //                .apis(RequestHandlerSelectors.any())
 //                为所有的路径生成api文档
@@ -85,9 +85,9 @@ public class Swagger2Config extends WebMvcConfigurationSupport {
     }
 
 
-    /**
-     * 给API文档接口添加安全认证
-     */
+//    /**
+//     * 给API文档接口添加安全认证
+//     */
     /*private List<ApiKey> securitySchemes() {
         List<ApiKey> apiKeys = new ArrayList<>();
         apiKeys.add(new ApiKey("Authorization", "Authorization", "header"));
