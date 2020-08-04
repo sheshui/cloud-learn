@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * 用户服务实现类
+ *
  * @author sunjiarui
  * @Date 2020/8/4
  */
@@ -17,9 +19,9 @@ public class UserAuthServiceImpl implements UserAuthService {
     UserAuthRepo userAuthRepo;
 
     /**
-     * 保存用户数据
-     *
-     * @param userAuth 用户信息
+     * 保存用户信息
+     * @param userAuth 用户信息实体
+     * @return ReturnMassage<String> 返回信息
      */
     @Override
     public ReturnMassage<String> saveUserAuth(UserAuth userAuth) {

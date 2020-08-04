@@ -1,5 +1,7 @@
 package com.neuqsoft.hrmanage.config;
 
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -22,6 +24,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class Swagger2Config extends WebMvcConfigurationSupport {
+
+    @Value("${info.app.name:DEMO}")
+    private String appName;
+    @Value("${info.app.description:description}")
+    private String description;
+    @Value("${info.app.version:0.0.0}")
+    private String appVersion;
+
+    /**
+     * 创建swagger-ui配置
+     *
+     * @return
+     */
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -32,26 +47,36 @@ public class Swagger2Config extends WebMvcConfigurationSupport {
 //                为添加指定注解的controller生成文档
 //                .apis(RequestHandlerSelectors.withClassAnnotation(Controller.class))
 //                为添加指定注解的方法生成api文档
-//                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
 //                为所有的接口生成api文档
-                .apis(RequestHandlerSelectors.any())
+//                .apis(RequestHandlerSelectors.any())
 //                为所有的路径生成api文档
                 .paths(PathSelectors.any())
 //                为指定路径的接口生成api文档
-//                .paths(PathSelectors.ant("/api"))
+//                .paths(PathSelectors.ant("/api/"))
                 .build();
     }
 
+    /**
+     * 设置配置显示的头信息（项目信息）
+     *
+     * @return
+     */
     private ApiInfo apiInfo() {
         Contact contant = new Contact("sheshui", "", "sunjr@neuqsoft.com");
         return new ApiInfoBuilder()
-                .title("swaggerUI")
-                .description("接口文档，描述")
+                .title(appName)
+                .description(appName + "接口文档描述：" + description)
                 .contact(contant)
-                .version("0.0.1")
+                .version(appVersion)
                 .build();
     }
 
+    /**
+     * 配置swagger资源映射
+     *
+     * @param registry 资源注册器
+     */
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");

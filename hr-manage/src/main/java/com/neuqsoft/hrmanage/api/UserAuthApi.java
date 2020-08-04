@@ -24,7 +24,7 @@ public class UserAuthApi {
 
     @ApiOperation("保存用户信息")
 //    @ApiImplicitParam(name = "userAuth",value = "用户信息实体",required = true,paramType = "body")
-    @PostMapping("save")
+    @PostMapping(value = "save")
     public ReturnMassage<String> saveUserAuth(@RequestBody UserAuth userAuth) {
         return authService.saveUserAuth(userAuth);
     }

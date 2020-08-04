@@ -11,6 +11,9 @@
     </parent>
 
     <artifactId>hr-manage</artifactId>
+    <version>0.0.3</version>
+    <name>hr-manage</name>
+    <description>人事管理系统雏形</description>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

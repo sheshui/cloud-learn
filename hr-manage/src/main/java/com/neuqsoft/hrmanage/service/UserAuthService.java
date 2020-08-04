@@ -4,13 +4,16 @@ import com.neuqsoft.hrmanage.dto.ReturnMassage;
 import com.neuqsoft.hrmanage.entity.UserAuth;
 
 /**
+ * 用户服务接口
+ *
  * @author sunjiarui
  * @Date 2020/8/4
  */
 public interface UserAuthService {
     /**
-     * @param userAuth
-     * @return
+     * 保存用户信息
+     * @param userAuth 用户信息实体
+     * @return ReturnMassage<String> 返回信息
      */
     ReturnMassage<String> saveUserAuth(UserAuth userAuth);
 }
