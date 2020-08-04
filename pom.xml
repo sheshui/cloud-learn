@@ -19,6 +19,8 @@
 
     <modules>
         <module>hr-manage</module>
+        <module>gateway</module>
+        <module>cloud-commons</module>
     </modules>
 
     <properties>

@@ -15,6 +15,12 @@
     <name>hr-manage</name>
     <description>人事管理系统雏形</description>
     <dependencies>
+        <!--        通用实体工具等-->
+        <dependency>
+            <groupId>com.neuqsoft</groupId>
+            <artifactId>cloud-commons</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -36,14 +42,16 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-        </dependency>
+
         <!--        mysql连接-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!--        druid连接池-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
         </dependency>
         <!--        jpa-->
         <dependency>
@@ -56,6 +64,7 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <!--        swagger2插件-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
