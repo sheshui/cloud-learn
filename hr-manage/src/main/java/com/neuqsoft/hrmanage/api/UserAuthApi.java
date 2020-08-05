@@ -6,10 +6,8 @@ import com.neuqsoft.hrmanage.service.UserAuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author sunjiarui
@@ -19,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/user")
 public class UserAuthApi {
+    @Value("${user.id}")
+    private String userId;
     @Autowired
     UserAuthService authService;
 
@@ -27,5 +27,11 @@ public class UserAuthApi {
     @PostMapping(value = "save")
     public ReturnMassage<String> saveUserAuth(@RequestBody UserAuth userAuth) {
         return authService.saveUserAuth(userAuth);
+    }
+
+    @ApiOperation("配置中心验证")
+    @GetMapping("/config")
+    public ReturnMassage<String> getConfig() {
+        return new ReturnMassage<>("0", "成功", userId);
     }
 }
