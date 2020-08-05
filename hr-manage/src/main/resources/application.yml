@@ -11,7 +11,10 @@ spring:
     url: jdbc:mysql://81.70.14.217:3306/hr?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: root
-
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
 info:
   app:
     name: "@project.name@"
