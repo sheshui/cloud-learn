@@ -1,4 +1,4 @@
-# hr-manage：bootstrap.yml
+# gateway：bootstrap
 spring:
   cloud:
     nacos:

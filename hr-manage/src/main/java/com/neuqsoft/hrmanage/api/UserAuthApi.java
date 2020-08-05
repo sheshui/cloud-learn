@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserAuthApi {
     @Value("${user.id}")
     private String userId;
+    @Value("${server.port}")
+    private String serverPort;
     @Autowired
     UserAuthService authService;
 
@@ -29,9 +31,16 @@ public class UserAuthApi {
         return authService.saveUserAuth(userAuth);
     }
 
+
     @ApiOperation("配置中心验证")
     @GetMapping("/config")
     public ReturnMassage<String> getConfig() {
         return new ReturnMassage<>("0", "成功", userId);
+    }
+
+    @ApiOperation("访问的端口")
+    @GetMapping("/port")
+    public ReturnMassage<String> getServerPort() {
+        return new ReturnMassage<>("0", "成功", serverPort);
     }
 }

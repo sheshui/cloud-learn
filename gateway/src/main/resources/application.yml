@@ -1,1 +1,11 @@
-
+# gateway：application.yml
+spring:
+  application:
+    name: "@project.name@"
+  profiles:
+    active: dev
+info:
+  app:
+    name: "@project.name@"
+    description: "@project.description@"
+    version: "@project.version@"
