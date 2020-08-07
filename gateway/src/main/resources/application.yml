@@ -1,11 +1,35 @@
 # gateway：application.yml
-spring:
-  application:
-    name: "@project.name@"
-  profiles:
-    active: dev
 info:
   app:
     name: "@project.name@"
     description: "@project.description@"
     version: "@project.version@"
+
+spring:
+  application:
+    name: "@project.name@"
+  profiles:
+    active: dev
+  cloud:
+    gateway:
+      # 开启注册中心动态路由
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: hr-manage
+          #          uri: lb://hr-manage
+          uri: http://localhost:8010
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=1
+        - id: auth-server
+            # uri: lb://auth-server
+            uri: http://localhost:8020
+            predicates:
+              - Path=/auth/**
+            filters:
+              - StripPrefix=1
+server:
+  port: 8000

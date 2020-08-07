@@ -28,6 +28,12 @@
         <!--            <groupId>org.springframework.boot</groupId>-->
         <!--            <artifactId>spring-boot-starter-web</artifactId>-->
         <!--        </dependency>-->
+
+        <!-- webflux 相关依赖 （spring gateway采用的webflux 无需添加spring-boot-web依赖（会和servlet冲突），） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
         <!--        gateway网关依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
