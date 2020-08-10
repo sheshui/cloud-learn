@@ -1,7 +1,6 @@
 package com.neuqsoft.authserver.config;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -55,13 +54,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     /**
      * token默认有效期2小时
      */
-    @Value("${accessToken.token.ValiditySeconds:7200}")
-    int tokenSeconds;
+//    @Value("${accessToken.token.ValiditySeconds:7200}")
+//    int tokenSeconds;
     /**
      * refreshToken默认有效期3天
      */
-    @Value("${accessToken.RefreshToken.ValiditySeconds:259200}")
-    int refreshSeconds;
+//    @Value("${accessToken.RefreshToken.ValiditySeconds:259200}")
+//    int refreshSeconds;
 
     /**
      * 客户端详情服务配置 （demo采用本地内存存储）
@@ -129,9 +128,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtAccessTokenConverter));
         tokenServices.setTokenEnhancer(tokenEnhancerChain);
         // 令牌有效期
-        tokenServices.setAccessTokenValiditySeconds(tokenSeconds);
+        tokenServices.setAccessTokenValiditySeconds(7200);
         // 刷新令牌默认有效期
-        tokenServices.setRefreshTokenValiditySeconds(refreshSeconds);
+        tokenServices.setRefreshTokenValiditySeconds(259200);
         return tokenServices;
     }
 
