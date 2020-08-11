@@ -1,7 +1,9 @@
 package com.neuqsoft.authserver.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,8 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 /**
@@ -24,6 +26,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
  */
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    /**
+     * redis连接工厂
+     */
+    @Autowired
+    private RedisConnectionFactory redisFactory;
+
     /**
      * 安全拦截机制
      */
@@ -45,8 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public TokenStore tokenStore() {
-//        return new RedisTokenStore();
-        return new InMemoryTokenStore();
+        return new RedisTokenStore(redisFactory);
+//        return new InMemoryTokenStore();
     }
 
     /**

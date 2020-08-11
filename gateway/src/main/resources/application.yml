@@ -31,6 +31,9 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=1
-
+  redis:
+    host: 81.70.14.217
+    port: 6379
+    password: '[370804sjr]'
 server:
   port: 8000

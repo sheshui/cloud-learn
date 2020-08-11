@@ -18,12 +18,6 @@
     </properties>
 
     <dependencies>
-        <!--        通用实体工具等-->
-        <dependency>
-            <groupId>com.neuqsoft</groupId>
-            <artifactId>cloud-commons</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
         <!--健康监控-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

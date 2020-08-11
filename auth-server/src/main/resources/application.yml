@@ -29,7 +29,7 @@ spring:
   redis:
     host: 81.70.14.217
     port: 6379
-    password: [370804sjr]
+    password: '[370804sjr]'
     database: 0
 # actuator
 management:
@@ -37,5 +37,5 @@ management:
     web:
       exposure:
         include: "*"
-spring.security.oauth2.resourceserver.jwt:
-  jwk-set-uri: 'http://localhost:8000/auth/oauth/check_token'
+#spring.security.oauth2.resourceserver.jwt:
+#  jwk-set-uri: 'http://localhost:8000/auth/oauth/check_token'

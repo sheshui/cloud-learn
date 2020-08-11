@@ -36,6 +36,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Autowired
     private final TokenStore tokenStore;
+
     /**
      * 客户端详细服务
      */
@@ -51,10 +52,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Autowired
     private final AuthorizationCodeServices authorizationCodeServices;
+    //    @Autowired
     /**
      * jwt Token解析器
      */
-//    @Autowired
     private final JwtAccessTokenConverter jwtAccessTokenConverter;
 
     /**
@@ -70,7 +71,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * 客户端详情服务配置 （demo采用本地内存存储）
-     *
      * @param clients 客户端
      * @throws Exception 异常
      */
