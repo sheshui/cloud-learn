@@ -18,18 +18,19 @@ spring:
           enabled: true
       routes:
         - id: hr-manage
-          #          uri: lb://hr-manage
+          # uri: lb://hr-manage
           uri: http://localhost:8010
           predicates:
-            - Path=/api/**
+            - Path=/hr/api/**
           filters:
             - StripPrefix=1
         - id: auth-server
-            # uri: lb://auth-server
-            uri: http://localhost:8020
-            predicates:
-              - Path=/auth/**
-            filters:
-              - StripPrefix=1
+          # uri: lb://auth-server
+          uri: http://localhost:8020
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+
 server:
   port: 8000

@@ -2,7 +2,6 @@ package com.neuqsoft.authserver.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,8 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 /**
@@ -45,9 +44,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * token持久化
      */
     @Bean
-    public TokenStore tokenStore(RedisConnectionFactory factory) {
+    public TokenStore tokenStore() {
 //        return new RedisTokenStore();
-        return new RedisTokenStore(factory);
+        return new InMemoryTokenStore();
     }
 
     /**
@@ -68,9 +67,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 认证是由 AuthenticationManager 来管理的，但是真正进行认证的是 AuthenticationManager 中定义的 AuthenticationProvider，用于调用userDetailsService进行验证
+     * 认证是由 AuthenticationManager 来管理的，
+     * 但是真正进行认证的是 AuthenticationManager 中定义的 AuthenticationProvider，
+     * 用于调用userDetailsService进行验证
      */
-    @Bean
     public AuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userDetailsService());
@@ -80,20 +80,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 用户详情服务
+     * 用户详细服务
      */
     @Bean
     @Override
     protected UserDetailsService userDetailsService() {
-        // 测试方便采用内存存取方式
         InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
-        userDetailsService.createUser(User.withUsername("user_1").password(passwordEncoder().encode("123456")).authorities("ROLE_USER").build());
-        userDetailsService.createUser(User.withUsername("user_2").password(passwordEncoder().encode("1234567")).authorities("ROLE_USER").build());
+        userDetailsService.createUser(User.withUsername("root").password(passwordEncoder().encode("root")).authorities("Role_User").build());
         return userDetailsService;
     }
 
     /**
-     * 设置授权码模式的授权码如何存取，暂时采用内存方式
+     * 设置授权码模式的授权码存取，暂时采用内存方式
      */
     @Bean
     public AuthorizationCodeServices authorizationCodeServices() {
@@ -105,9 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
-
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        // 对称密钥，资源服务器使用该密钥来验证
         converter.setSigningKey("sheshui");
         return converter;
     }

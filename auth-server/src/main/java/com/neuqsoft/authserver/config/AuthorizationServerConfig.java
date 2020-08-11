@@ -1,6 +1,7 @@
 package com.neuqsoft.authserver.config;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,34 +34,39 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     /**
      * 令牌存储配置
      */
+    @Autowired
     private final TokenStore tokenStore;
     /**
      * 客户端详细服务
      */
+    @Autowired
     private final ClientDetailsService clientDetailsService;
     /**
      * 认证管理器
      */
+    @Autowired
     private final AuthenticationManager authenticationManager;
     /**
      * 授权码服务器
      */
+    @Autowired
     private final AuthorizationCodeServices authorizationCodeServices;
     /**
      * jwt Token解析器
      */
+//    @Autowired
     private final JwtAccessTokenConverter jwtAccessTokenConverter;
 
     /**
      * token默认有效期2小时
      */
-//    @Value("${accessToken.token.ValiditySeconds:7200}")
-//    int tokenSeconds;
+//    @Value("${tokenValidity.tokenSeconds:7200}")
+//    private String tokenSeconds;
     /**
      * refreshToken默认有效期3天
      */
-//    @Value("${accessToken.RefreshToken.ValiditySeconds:259200}")
-//    int refreshSeconds;
+//    @Value("${tokenValidity.refreshSeconds:259200}")
+//    private String refreshSeconds="259200";
 
     /**
      * 客户端详情服务配置 （demo采用本地内存存储）
