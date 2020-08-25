@@ -19,14 +19,14 @@ spring:
       routes:
         - id: hr-manage
           uri: lb://hr-manage
-          #          uri: http://localhost:8010
+          # uri: http://localhost:8010
           predicates:
             - Path=/api/**
           filters:
             - StripPrefix=1
         - id: auth-server
           uri: lb://auth-server
-          #          uri: http://localhost:8020
+          # uri: http://localhost:8020
           predicates:
             - Path=/auth/**
           filters:
