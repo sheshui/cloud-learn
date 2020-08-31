@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -16,13 +17,14 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-@Table(name = "UserDetail")
+@Table(name = "user_detail")
 @ApiModel("用户信息详情")
 public class UserDetail implements Serializable {
     private static final long serialVersionUID = 130674160081464082L;
     /**
      * 用户id
      */
+    @Id
     @ApiModelProperty("用户id")
     private String userId;
     /**

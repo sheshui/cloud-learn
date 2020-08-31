@@ -3,6 +3,7 @@ package com.neuqsoft.hrmanage.entity;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -14,10 +15,10 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-@Table(name = "VUserInfo")
+@Table(name = "v_user_info")
 public class VUserInfo implements Serializable {
     private static final long serialVersionUID = 118458484281830864L;
-
+    @Id
     private String userId;
 
     private String userName;
