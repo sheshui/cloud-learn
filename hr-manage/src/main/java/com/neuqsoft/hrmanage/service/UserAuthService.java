@@ -1,7 +1,7 @@
 package com.neuqsoft.hrmanage.service;
 
-import com.neuqsoft.common.dto.ReturnMassage;
-import com.neuqsoft.common.entity.UserAuth;
+import com.neuqsoft.hrmanage.dto.ReturnMassage;
+import com.neuqsoft.hrmanage.entity.UserAuth;
 
 /**
  * 用户服务接口

@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-@Table(name = "Role")
+@Table(name = "role")
 @ApiModel("角色信息表")
 public class Role implements Serializable {
     private static final long serialVersionUID = -70780839419382789L;

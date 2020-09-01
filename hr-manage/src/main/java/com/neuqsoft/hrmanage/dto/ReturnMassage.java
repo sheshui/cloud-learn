@@ -1,4 +1,4 @@
-package com.neuqsoft.common.dto;
+package com.neuqsoft.hrmanage.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,7 +1,7 @@
 package com.neuqsoft.hrmanage.api;
 
-import com.neuqsoft.common.dto.ReturnMassage;
-import com.neuqsoft.common.entity.UserAuth;
+import com.neuqsoft.hrmanage.dto.ReturnMassage;
+import com.neuqsoft.hrmanage.entity.UserAuth;
 import com.neuqsoft.hrmanage.service.UserAuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

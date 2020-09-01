@@ -1,4 +1,4 @@
-package com.neuqsoft.common.entity;
+package com.neuqsoft.hrmanage.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-@Table(name = "Resource")
+@Table(name = "resource")
 @ApiModel("资源表")
 public class Resource implements Serializable {
     private static final long serialVersionUID = 708535123323339876L;
