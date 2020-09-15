@@ -8,7 +8,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author sunjiarui
  * @Date 2020/08/03
  */
-//@EntityScan("com.neuqsoft.common")
 @EnableDiscoveryClient
 @SpringBootApplication
 public class HrManageApplication {
