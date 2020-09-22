@@ -25,7 +25,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 public class SecurityWebFluxConfig extends ResourceServerConfigurerAdapter {
     @Autowired
-    private RedisConnectionFactory factory;
+    private RedisConnectionFactory redisConnectionFactory;
 //    //自定义的鉴权服务，通过鉴权的才能继续访问某个请求
 //    @Autowired
 //    private MyRBACServiceWebFlux myRBACServiceWebFlux;
@@ -107,7 +107,7 @@ public class SecurityWebFluxConfig extends ResourceServerConfigurerAdapter {
      */
     @Bean
     public TokenStore tokenStore() {
-        return new RedisTokenStore(factory);
+        return new RedisTokenStore(redisConnectionFactory);
     }
 
     /**

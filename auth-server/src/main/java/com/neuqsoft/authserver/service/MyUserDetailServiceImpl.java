@@ -54,7 +54,7 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
                 authorities.add(new SimpleGrantedAuthority(userRole.getRoleId()));
             });
 
-            return new User(username, new BCryptPasswordEncoder().encode(auth.getUserPwd()), authorities);
+            return new User(auth.getUserId(), new BCryptPasswordEncoder().encode(auth.getUserPwd()), authorities);
         }
     }
 }
