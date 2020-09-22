@@ -30,7 +30,7 @@ public class UserAuth implements Serializable {
     @Id
     @ApiModelProperty("用户主键")
     @GeneratedValue(generator = "jpa-uuid")
-    private String id;
+    private String userId;
     /**
      * 用户名
      */

@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -47,13 +48,13 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
         if (auth == null) {
             throw new UsernameNotFoundException("用户不存在");
         } else {
-            List<UserRole> roleList = userRoleRepo.findByUserId(auth.getId());
+            List<UserRole> roleList = userRoleRepo.findByUserId(auth.getUserId());
             List<GrantedAuthority> authorities = new ArrayList<>();
             roleList.forEach(userRole -> {
                 authorities.add(new SimpleGrantedAuthority(userRole.getRoleId()));
             });
 
-            return new User(username, auth.getUserPwd(), authorities);
+            return new User(username, new BCryptPasswordEncoder().encode(auth.getUserPwd()), authorities);
         }
     }
 }

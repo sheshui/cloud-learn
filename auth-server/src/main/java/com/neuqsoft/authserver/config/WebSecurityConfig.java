@@ -1,5 +1,6 @@
 package com.neuqsoft.authserver.config;
 
+import com.neuqsoft.authserver.service.MyUserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,8 +10,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
@@ -18,7 +17,6 @@ import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCo
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 /**
  * @author sunjiarui
@@ -31,6 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     private RedisConnectionFactory redisFactory;
+    @Autowired
+    private MyUserDetailServiceImpl userDetailService;
 
     /**
      * 安全拦截机制
@@ -61,6 +61,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * 密码加密器
      */
     @Bean
+//    public PasswordEncoder passwordEncoder(){
+//        return NoOpPasswordEncoder.getInstance();
+//    }
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -81,22 +84,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     public AuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService());
+        daoAuthenticationProvider.setUserDetailsService(userDetailService);
         daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
 
-    /**
-     * 用户详细服务
-     */
-    @Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
-        userDetailsService.createUser(User.withUsername("root").password(passwordEncoder().encode("root")).authorities("Role_User").build());
-        return userDetailsService;
-    }
+//    /**
+//     * 用户详细服务
+//     */
+//    @Bean
+//    @Override
+//    protected UserDetailsService userDetailsService() {
+//        InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
+//        userDetailsService.createUser(User.withUsername("root").password(passwordEncoder().encode("root")).authorities("Role_User").build());
+//        return userDetailsService;
+//    }
 
     /**
      * 设置授权码模式的授权码存取，暂时采用内存方式
