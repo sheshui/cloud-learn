@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
@@ -109,13 +108,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryAuthorizationCodeServices();
     }
 
-    /**
-     * jwt token解析器
-     */
-    @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("sheshui");
-        return converter;
-    }
+//    /**
+//     * jwt token解析器
+//     */
+//    @Bean
+//    public JwtAccessTokenConverter accessTokenConverter() {
+//        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+//        converter.setSigningKey("sheshui");
+//        return converter;
+//    }
 }

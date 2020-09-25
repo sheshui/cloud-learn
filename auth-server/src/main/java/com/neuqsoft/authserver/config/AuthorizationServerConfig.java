@@ -11,15 +11,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-
-import java.util.Arrays;
 
 /**
  * 认证服务器配置类
@@ -37,11 +30,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private final TokenStore tokenStore;
 
-    /**
-     * 客户端详细服务
-     */
-    @Autowired
-    private final ClientDetailsService clientDetailsService;
+//    /**
+//     * 客户端详细服务
+//     */
+//    @Autowired
+//    private final ClientDetailsService clientDetailsService;
     /**
      * 认证管理器
      */
@@ -53,10 +46,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private final AuthorizationCodeServices authorizationCodeServices;
     //    @Autowired
-    /**
-     * jwt Token解析器
-     */
-    private final JwtAccessTokenConverter jwtAccessTokenConverter;
+//    /**
+//     * jwt Token解析器
+//     */
+//    private final JwtAccessTokenConverter jwtAccessTokenConverter;
 
     /**
      * token默认有效期2小时
@@ -123,21 +116,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .tokenKeyAccess("permitAll()")
                 // 允许表单认证
                 .allowFormAuthenticationForClients();
-    }
-
-    public AuthorizationServerTokenServices tokenServices() {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-        tokenServices.setTokenStore(tokenStore);
-        tokenServices.setSupportRefreshToken(true);
-        // 令牌增强
-        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtAccessTokenConverter));
-        tokenServices.setTokenEnhancer(tokenEnhancerChain);
-        // 令牌有效期
-        tokenServices.setAccessTokenValiditySeconds(7200);
-        // 刷新令牌默认有效期
-        tokenServices.setRefreshTokenValiditySeconds(259200);
-        return tokenServices;
     }
 
 
