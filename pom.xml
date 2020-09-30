@@ -22,6 +22,7 @@
         <module>gateway</module>
         <module>cloud-commons</module>
         <module>auth-server</module>
+        <module>journal</module>
     </modules>
 
     <properties>
