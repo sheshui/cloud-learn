@@ -45,6 +45,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-resource-server</artifactId>
+        </dependency>
         <!-- spring oauth2.0 (包含了spring security无需单独引入) 相关 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

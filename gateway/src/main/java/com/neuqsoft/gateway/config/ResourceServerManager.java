@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -26,18 +27,18 @@ public class ResourceServerManager implements ReactiveAuthenticationManager {
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
         return Mono.justOrEmpty(authentication)
-                .filter(a -> a instanceof OAuth2AccessToken)
-                .cast(OAuth2AccessToken.class)
-                .map(OAuth2AccessToken::getValue)
+                .filter(authentication1 -> authentication instanceof BearerTokenAuthenticationToken)
+                .cast(BearerTokenAuthenticationToken.class)
+                .map(BearerTokenAuthenticationToken::getToken)
                 .flatMap((accessToken -> {
                     log.info("accessToken is: {}", accessToken);
-                    OAuth2AccessToken oAuth2AccessToken = this.tokenStore.readAccessToken(accessToken);
+                    OAuth2AccessToken oAuth2AccessToken = this.tokenStore.readAccessToken(accessToken.toString());
                     if (oAuth2AccessToken == null) {
                         return Mono.error(new InvalidTokenException("密钥不正确，请检查"));
                     } else if (oAuth2AccessToken.isExpired()) {
                         return Mono.error(new InvalidTokenException("密钥已过期，请重新登录"));
                     }
-                    OAuth2Authentication oAuth2Authentication = this.tokenStore.readAuthentication(accessToken);
+                    OAuth2Authentication oAuth2Authentication = this.tokenStore.readAuthentication(accessToken.toString());
                     if (oAuth2Authentication == null) {
                         return Mono.error(new InvalidTokenException("Access Token 无效"));
                     } else {

@@ -22,6 +22,12 @@ spring:
           # uri: http://localhost:8010
           predicates:
             - Path=/api/**
+        - id: without-auth
+          uri: lb://hr-manage
+          predicates:
+            - Path=/without/api/**
+          filters:
+            - StripPrefix=1
         - id: auth-server
           uri: lb://auth-server
           # uri: http://localhost:8020

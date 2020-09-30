@@ -21,13 +21,11 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> authentication, AuthorizationContext context) {
         ServerWebExchange exchange = context.getExchange();
-        String requestPath = exchange.getRequest().getURI().getPath();
-        return authentication.map(auth -> {
-            return new AuthorizationDecision(checkAuth(exchange, auth, requestPath));
-        });
+        return authentication.map(auth -> new AuthorizationDecision(checkAuth(exchange, auth)));
     }
 
-    private boolean checkAuth(ServerWebExchange exchange, Authentication authentication, String requestPath) {
+    private boolean checkAuth(ServerWebExchange exchange, Authentication authentication) {
+        log.info("auth:{}", authentication);
         if (authentication instanceof OAuth2Authentication) {
             OAuth2Authentication auth = (OAuth2Authentication) authentication;
             String clientId = auth.getOAuth2Request().getClientId();
@@ -36,7 +34,7 @@ public class AccessManager implements ReactiveAuthorizationManager<Authorization
         Object pricipal = authentication.getPrincipal();
         log.info("用户信息：{}", pricipal.toString());
         User user = (User) pricipal;
-        log.info("{}|{}", user.getUsername(), requestPath);
+        log.info("{}|{}|{}", exchange.getRequest().getMethod(), user.getUsername(), exchange.getRequest().getURI().getPath());
         return true;
     }
 }
