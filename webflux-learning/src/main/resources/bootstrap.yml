@@ -1,0 +1,9 @@
+# webflux：bootstrap
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 81.70.14.217:18848
+#      config:
+#        server-addr: localhost:8848
+#        file-extension: yml
