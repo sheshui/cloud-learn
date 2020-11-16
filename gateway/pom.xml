@@ -18,22 +18,11 @@
     </properties>
 
     <dependencies>
-        <!--        &lt;!&ndash;        通用实体工具等&ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.neuqsoft</groupId>-->
-        <!--            <artifactId>cloud-commons</artifactId>-->
-        <!--            <version>${project.parent.version}</version>-->
-        <!--        </dependency>-->
         <!--        健康监测-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!--&lt;!&ndash;                       web&ndash;&gt;-->
-        <!--                <dependency>-->
-        <!--                    <groupId>org.springframework.boot</groupId>-->
-        <!--                    <artifactId>spring-boot-starter-web</artifactId>-->
-        <!--                </dependency>-->
 
         <!-- webflux 相关依赖 （spring gateway采用的webflux 无需添加spring-boot-web依赖（会和servlet冲突），） -->
         <dependency>
@@ -51,10 +40,10 @@
             <artifactId>spring-security-oauth2-resource-server</artifactId>
         </dependency>
         <!-- spring oauth2.0 (包含了spring security无需单独引入) 相关 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-oauth2</artifactId>-->
+        <!--        </dependency>-->
         <!--        nacos 服务注册中心-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

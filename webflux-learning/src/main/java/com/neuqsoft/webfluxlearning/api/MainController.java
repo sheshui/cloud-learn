@@ -38,4 +38,9 @@ public class MainController {
     public Flux<UserAuth> getAllUser() {
         return dbClient.select().from(UserAuth.class).as(UserAuth.class).all();
     }
+
+    @GetMapping("/userNames")
+    public Flux<String> getUserName() {
+        return userAuthRepo.findAll().map(UserAuth::getUserName);
+    }
 }
