@@ -1,20 +1,21 @@
-package com.neuqsoft.authserver.service;
+package com.neuqsoft.gateway.service;
 
 import cn.hutool.core.lang.Validator;
-import com.neuqsoft.authserver.entity.UserAuth;
-import com.neuqsoft.authserver.entity.UserRole;
-import com.neuqsoft.authserver.repo.UserAuthRepo;
-import com.neuqsoft.authserver.repo.UserRoleRepo;
+import com.neuqsoft.gateway.entity.UserAuth;
+import com.neuqsoft.gateway.entity.UserRole;
+import com.neuqsoft.gateway.repo.UserAuthRepo;
+import com.neuqsoft.gateway.repo.UserRoleRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class MyUserDetailServiceImpl implements UserDetailsService {
+public class MyUserDetailServiceImpl extends MapReactiveUserDetailsService {
     @Autowired
     UserAuthRepo userAuthRepo;
     @Autowired
@@ -35,7 +36,7 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public Mono<UserDetails> findByUsername(String username) throws UsernameNotFoundException {
         log.info("@#@#@#@#@#{}|开始认证登录@#@#@#@#@#", username);
         UserAuth auth;
         if (Validator.isEmail(username)) {
@@ -57,7 +58,7 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
                 authorities.add(new SimpleGrantedAuthority(userRole.getRoleId()));
             });
 
-            return new User(auth.getUserId(), passwordEncoder.encode(auth.getUserPwd()), authorities);
+            return Mono.just(new User(auth.getUserId(), passwordEncoder.encode(auth.getUserPwd()), authorities));
         }
     }
 }

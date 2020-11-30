@@ -37,6 +37,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
+        <!--jwt-->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+        </dependency>
+
         <!--nacos 服务注册中心-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

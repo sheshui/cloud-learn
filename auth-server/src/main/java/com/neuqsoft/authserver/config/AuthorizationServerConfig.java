@@ -12,7 +12,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 认证服务器配置类
@@ -30,11 +34,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private final TokenStore tokenStore;
 
-//    /**
-//     * 客户端详细服务
-//     */
-//    @Autowired
-//    private final ClientDetailsService clientDetailsService;
     /**
      * 认证管理器
      */
@@ -45,11 +44,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Autowired
     private final AuthorizationCodeServices authorizationCodeServices;
-    //    @Autowired
-//    /**
-//     * jwt Token解析器
-//     */
-//    private final JwtAccessTokenConverter jwtAccessTokenConverter;
 
     /**
      * token默认有效期2小时
@@ -90,6 +84,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        List<TokenEnhancer> delegates = new ArrayList<>();
+
         endpoints
                 // 认证管理器
                 .authenticationManager(authenticationManager)

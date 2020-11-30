@@ -1,5 +1,6 @@
 package com.neuqsoft.authserver.config;
 
+import cn.hutool.crypto.asymmetric.RSA;
 import com.neuqsoft.authserver.service.MyUserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +16,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+
+import java.security.KeyPair;
 
 /**
  * @author sunjiarui
@@ -39,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 // 放行所有请求认证请求
                 .authorizeRequests()
-                .antMatchers("/auth/**")
+                .antMatchers("/auth/**", "/rsa/**")
                 .permitAll()
                 //  其他请求必须认证
                 .anyRequest().authenticated()
@@ -108,13 +112,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryAuthorizationCodeServices();
     }
 
-//    /**
+    //    /**
 //     * jwt token解析器
 //     */
-//    @Bean
-//    public JwtAccessTokenConverter accessTokenConverter() {
-//        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-//        converter.setSigningKey("sheshui");
-//        return converter;
-//    }
+    @Bean
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setKeyPair(keyPair());
+        return converter;
+    }
+
+
+    @Bean
+    public KeyPair keyPair() {
+        //从classpath下的证书中获取秘钥对
+        RSA rsa = new RSA();
+        return new KeyPair(rsa.getPublicKey(), rsa.getPrivateKey());
+    }
+
 }

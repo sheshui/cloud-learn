@@ -36,6 +36,7 @@
         <swagger2.version>2.9.2</swagger2.version>
         <redis.version>2.3.2.RELEASE</redis.version>
         <hutool.version>5.1.0</hutool.version>
+        <nimbus.version>8.16</nimbus.version>
     </properties>
 
     <dependencyManagement>
@@ -101,6 +102,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-r2dbc</artifactId>
                 <version>2.3.4.RELEASE</version>
+            </dependency>
+            <!--jwt-->
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${nimbus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
