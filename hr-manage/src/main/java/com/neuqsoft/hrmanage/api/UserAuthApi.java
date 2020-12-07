@@ -30,6 +30,12 @@ public class UserAuthApi {
     public ReturnMassage<String> saveUserAuth(@RequestBody UserAuth userAuth) {
         return authService.saveUserAuth(userAuth);
     }
+//
+//    @ApiOperation("用户注册")
+//    @PostMapping("/anonymous/register")
+//    public ReturnMassage<String> register(@RequestBody UserAuth userAuth){
+//        return authService.saveUserAuth(userAuth);
+//    }
 
 
     @ApiOperation("配置中心验证")
