@@ -1,5 +1,7 @@
 package com.neuqsoft.hrmanage.service.impl;
 
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import com.neuqsoft.hrmanage.dto.ReturnMassage;
 import com.neuqsoft.hrmanage.dto.UserDetailDto;
 import com.neuqsoft.hrmanage.entity.UserAuth;
@@ -10,6 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -42,8 +47,11 @@ public class UserAuthServiceImpl implements UserAuthService {
     }
 
     @Override
-    public ReturnMassage<String> saveUserAuths(MultipartFile file) {
-        return null;
+    public ReturnMassage<String> saveUserAuths(MultipartFile file) throws IOException {
+        InputStream in = new ByteArrayInputStream(file.getBytes());
+        ExcelReader reader = ExcelUtil.getReader(in, 0);
+        List<UserDetailDto> detailDtoList = reader.readAll(UserDetailDto.class);
+        return new ReturnMassage<>("0", "保存成功");
     }
 
     @Override
