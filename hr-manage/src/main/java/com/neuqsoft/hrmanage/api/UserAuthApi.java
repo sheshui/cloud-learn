@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,30 +33,35 @@ public class UserAuthApi {
 
     @ApiOperation("保存用户信息")
 //    @ApiImplicitParam(name = "userAuth",value = "用户信息实体",required = true,paramType = "body")
-    @PostMapping("/save")
+    @PostMapping("/anonymous/signup")
     public ReturnMassage<String> saveUserAuth(@RequestBody UserAuth userAuth) {
         return authService.saveUserAuth(userAuth);
     }
 
-    @GetMapping("/batch")
+    @GetMapping("/manage/batch")
     public ReturnMassage<String> saveUserAuths(@RequestBody List<UserAuth> userAuthList) {
         return authService.saveUserAuths(userAuthList);
     }
 
-    @PostMapping("/batch/file")
+    @PostMapping("/manage/batch/file")
     public ReturnMassage<String> saveUserAuths(@RequestBody MultipartFile file) throws IOException {
         return authService.saveUserAuths(file);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/manage/all")
     public Page<UserAuth> findAll(int pageSize, int pageNo) {
         return authService.findAll(pageSize, pageNo);
     }
 
 
-    @PostMapping("/del")
+    @PostMapping("/manage/del")
     public ReturnMassage<String> delUser(@RequestBody List<String> userIds) {
         return authService.delUser(userIds);
+    }
+
+    @PostMapping("/del")
+    public ReturnMassage<String> delSelf(@RequestBody String userId) {
+        return authService.delUser(Collections.singletonList(userId));
     }
 
     @PostMapping("/detail")

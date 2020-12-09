@@ -44,6 +44,9 @@ public class UserAuthServiceImpl implements UserAuthService {
      */
     @Override
     public ReturnMassage<String> saveUserAuth(UserAuth userAuth) {
+        if (userAuthRepo.findByUserName(userAuth.getUserName()) != null) {
+            return new ReturnMassage<>("-1", "用户名已存在");
+        }
         userAuthRepo.save(userAuth);
         return new ReturnMassage<>("0", "保存成功");
     }

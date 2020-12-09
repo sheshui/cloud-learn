@@ -33,7 +33,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("*/anonymous/**", "/swagger-ui.html").permitAll()
-                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/**").access("#oauth2.hasAnyScope('self')")
                 .antMatchers("*/manage/**").access("#oauth2.clientHasRole('HR')")
 //                .antMatchers("/swagger-ui.html").permitAll()
                 .and().csrf().disable();
