@@ -2,7 +2,6 @@ package com.neuqsoft.hrmanage.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -10,7 +9,6 @@ import lombok.Data;
  * @Date 2020/8/4
  */
 @Data
-@AllArgsConstructor
 @ApiModel("返回实体类")
 public class ReturnMassage<T> {
     @ApiModelProperty("返回代码")
