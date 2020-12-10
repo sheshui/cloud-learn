@@ -1,7 +1,7 @@
 package com.neuqsoft.hrmanage.repo;
 
 import com.neuqsoft.hrmanage.entity.UserAuth;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * @Date 2020/8/4
  */
 @Repository
-public interface UserAuthRepo extends JpaRepository<UserAuth, String> {
+public interface UserAuthRepo extends PagingAndSortingRepository<UserAuth, String> {
     /**
      * 按照用户名查找用户实体
      *

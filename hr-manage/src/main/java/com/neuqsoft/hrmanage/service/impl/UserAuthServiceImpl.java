@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +36,8 @@ public class UserAuthServiceImpl implements UserAuthService {
     UserAuthRepo userAuthRepo;
     @Autowired
     UserDetailRepo userDetailRepo;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     /**
      * 保存用户信息
@@ -47,6 +50,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         if (userAuthRepo.findByUserName(userAuth.getUserName()) != null) {
             return new ReturnMassage<>("-1", "用户名已存在");
         }
+        userAuth.setUserPwd(passwordEncoder.encode(userAuth.getUserPwd()));
         userAuthRepo.save(userAuth);
         return new ReturnMassage<>("0", "保存成功");
     }
@@ -83,6 +87,7 @@ public class UserAuthServiceImpl implements UserAuthService {
     public ReturnMassage<String> saveUserDetail(UserDetailDto detail) {
         UserAuth userInfo = new UserAuth();
         BeanUtils.copyProperties(detail, userInfo);
+        userInfo.setUserPwd(passwordEncoder.encode(userInfo.getUserPwd()));
         userAuthRepo.save(userInfo);
         UserDetail userDetail = new UserDetail();
         BeanUtils.copyProperties(detail, userDetail);

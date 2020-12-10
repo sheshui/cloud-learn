@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -23,6 +25,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private RedisConnectionFactory factory;
 
 
+
     /**
      * 路由安全配置
      *
@@ -33,9 +36,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("*/anonymous/**", "/swagger-ui.html").permitAll()
-                .antMatchers("/api/**").access("#oauth2.hasAnyScope('self')")
-                .antMatchers("*/manage/**").access("#oauth2.clientHasRole('HR')")
+//                .antMatchers("/api/**").authenticated()
+//                .antMatchers("*/manage/**").access("#oauth2.clientHasRole('HR')")
 //                .antMatchers("/swagger-ui.html").permitAll()
+                .and().cors()
                 .and().csrf().disable();
     }
 
@@ -65,4 +69,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         return accessTokenConverter;
     }
 
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
