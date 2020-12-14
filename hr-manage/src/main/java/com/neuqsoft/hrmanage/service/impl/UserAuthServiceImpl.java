@@ -1,7 +1,10 @@
 package com.neuqsoft.hrmanage.service.impl;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.UUID;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import com.neuqsoft.hrmanage.config.user.UserHolder;
 import com.neuqsoft.hrmanage.dto.ReturnMassage;
 import com.neuqsoft.hrmanage.dto.UserDetailDto;
 import com.neuqsoft.hrmanage.entity.UserAuth;
@@ -10,6 +13,7 @@ import com.neuqsoft.hrmanage.repo.UserAuthRepo;
 import com.neuqsoft.hrmanage.repo.UserDetailRepo;
 import com.neuqsoft.hrmanage.service.UserAuthService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,6 +43,9 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    UserHolder userHolder;
+
     /**
      * 保存用户信息
      *
@@ -50,13 +57,40 @@ public class UserAuthServiceImpl implements UserAuthService {
         if (userAuthRepo.findByUserName(userAuth.getUserName()) != null) {
             return new ReturnMassage<>("-1", "用户名已存在");
         }
+        if (!StringUtils.isEmpty(userAuth.getUserEmail()) && userAuthRepo.findByUserEmail(userAuth.getUserEmail()) != null) {
+            return new ReturnMassage<>("-1", "邮箱已存在");
+        }
+        if (!StringUtils.isEmpty(userAuth.getUserPhone()) && userAuthRepo.findByUserPhone(userAuth.getUserPhone()) != null) {
+            return new ReturnMassage<>("-1", "手机号已存在");
+        }
         userAuth.setUserPwd(passwordEncoder.encode(userAuth.getUserPwd()));
+        String userId = "";
+        try {
+            System.out.println(userHolder.getUid());
+            userId = userHolder.getUid();
+        } catch (Exception e) {
+            log.info("匿名用户注册中。。。");
+        }
+        if (StringUtils.isEmpty(userId)) {
+            userId = UUID.fastUUID().toString(true);
+            userAuth.setUserId(userId);
+        }
+        userAuth.setCreaterId(userId);
+        userAuth.setCreateTime(DateUtil.now());
+        userAuth.setUserStatus("1");
         userAuthRepo.save(userAuth);
         return new ReturnMassage<>("0", "保存成功");
     }
 
     @Override
     public ReturnMassage<String> saveUserAuths(List<UserAuth> userAuths) {
+        userAuths.forEach(userAuth -> {
+            userAuth.setCreaterId(userHolder.getUid());
+            userAuth.setCreateTime(DateUtil.now());
+            if (StringUtils.isEmpty(userAuth.getUserId())) {
+                userAuth.setUserId(UUID.fastUUID().toString(true));
+            }
+        });
         userAuthRepo.saveAll(userAuths);
         return new ReturnMassage<>("0", "保存成功");
     }
@@ -66,14 +100,27 @@ public class UserAuthServiceImpl implements UserAuthService {
         InputStream in = new ByteArrayInputStream(file.getBytes());
         ExcelReader reader = ExcelUtil.getReader(in, 0);
         List<UserAuth> userAuths = reader.readAll(UserAuth.class);
+        System.out.println("file处理：\n" + userAuths);
+        userAuths.forEach(userAuth -> {
+//            userAuth.setCreaterId(userHolder.getUid());
+            userAuth.setCreateTime(DateUtil.now());
+            if (StringUtils.isEmpty(userAuth.getUserId())) {
+                userAuth.setUserId(UUID.fastUUID().toString(true));
+            }
+        });
         userAuthRepo.saveAll(userAuths);
         return new ReturnMassage<>("0", "保存成功");
     }
 
     @Override
     public Page<UserAuth> findAll(int pageSize, int pageNo) {
-        PageRequest request = PageRequest.of(pageSize, pageNo);
-        return userAuthRepo.findAll(request);
+        PageRequest request = PageRequest.of(pageNo, pageSize);
+        Page<UserAuth> page = userAuthRepo.findAll(request);
+        page.getContent().forEach(userAuth -> {
+            String createName = getUserName(userAuth.getCreaterId());
+            userAuth.setCreaterId(StringUtils.isEmpty(createName) ? userAuth.getUserName() : createName);
+        });
+        return page;
     }
 
     @Override
@@ -85,14 +132,22 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Override
     public ReturnMassage<String> saveUserDetail(UserDetailDto detail) {
-        UserAuth userInfo = new UserAuth();
+        UserAuth userInfo = userAuthRepo.getOne(detail.getUserId());
         BeanUtils.copyProperties(detail, userInfo);
         userInfo.setUserPwd(passwordEncoder.encode(userInfo.getUserPwd()));
         userAuthRepo.save(userInfo);
-        UserDetail userDetail = new UserDetail();
+        UserDetail userDetail = userDetailRepo.getOne(detail.getUserId());
         BeanUtils.copyProperties(detail, userDetail);
         userDetailRepo.save(userDetail);
         return new ReturnMassage<>("0", "保存成功");
+    }
+
+
+    private String getUserName(String userId) {
+        if (StringUtils.isEmpty(userId)) {
+            return null;
+        }
+        return userAuthRepo.findById(userId).get().getUserName();
     }
 
 

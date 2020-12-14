@@ -5,7 +5,7 @@ user:
 
 # 端口配置
 server:
-  port: 8010
+  port: 8020
 
 info:
   app:
@@ -42,8 +42,9 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
+
   redis:
     host: 81.70.14.217
     port: 16379

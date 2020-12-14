@@ -3,10 +3,8 @@ package com.neuqsoft.hrmanage.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -21,7 +19,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "user_auth")
 @ApiModel("用户实体类")
-@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+//@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class UserAuth implements Serializable {
     private static final long serialVersionUID = -37766015161026030L;
     /**
@@ -29,7 +27,7 @@ public class UserAuth implements Serializable {
      */
     @Id
     @ApiModelProperty("用户主键")
-    @GeneratedValue(generator = "jpa-uuid")
+//    @GeneratedValue(generator = "jpa-uuid")
     private String userId;
     /**
      * 用户名
@@ -56,5 +54,11 @@ public class UserAuth implements Serializable {
      */
     @ApiModelProperty("用户状态")
     private String userStatus;
+
+    @ApiModelProperty("创建人")
+    private String createrId;
+
+    @ApiModelProperty("创建时间")
+    private String createTime;
 
 }

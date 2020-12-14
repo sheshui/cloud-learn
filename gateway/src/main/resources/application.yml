@@ -33,9 +33,9 @@ spring:
           uri: lb://hr-manage
           # uri: http://localhost:8010
           predicates:
-            - Path=/api/**
-        #          filters:
-        #            - StripPrefix=2
+            - Path=/hr/**
+          filters:
+            - StripPrefix=1
         - id: without-auth
           uri: lb://hr-manage
           predicates:
