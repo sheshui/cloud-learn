@@ -66,5 +66,7 @@ public interface UserAuthService {
      */
     ReturnMassage<String> saveUserDetail(UserDetailDto detail);
 
+    Page<UserAuth> search(String param, String value, int pageNo, int pageSize);
+
 //    Page<UserAuth>
 }

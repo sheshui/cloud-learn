@@ -69,7 +69,13 @@ public class UserAuthApi {
         return authService.saveUserDetail(detailDto);
     }
 
-
+    @GetMapping("/search")
+    public Page<UserAuth> search(@RequestParam(defaultValue = "userName") String params,
+                                 @RequestParam(required = false) String value,
+                                 @RequestParam(defaultValue = "0") int pageNo,
+                                 @RequestParam(defaultValue = "10") int pageSize) {
+        return authService.search(params, value, pageNo, pageSize);
+    }
 //
 //    @ApiOperation("用户注册")
 //    @PostMapping("/anonymous/register")

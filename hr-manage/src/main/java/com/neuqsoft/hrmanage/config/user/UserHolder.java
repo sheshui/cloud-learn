@@ -14,7 +14,9 @@ public class UserHolder {
 
     public String getUid() {
         LinkedHashMap<String, Object> details = getUserDetail();
-        return details.get("userId").toString();
+        System.out.println("用户信息:");
+        System.out.println(details);
+        return details.get("username").toString();
     }
 
     public LinkedHashMap<String, Object> getUserDetail() {

@@ -53,9 +53,7 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
         } else {
             List<UserRole> roleList = userRoleRepo.findByUserId(auth.getUserId());
             List<GrantedAuthority> authorities = new ArrayList<>();
-            roleList.forEach(userRole -> {
-                authorities.add(new SimpleGrantedAuthority(userRole.getRoleId()));
-            });
+            roleList.forEach(userRole -> authorities.add(new SimpleGrantedAuthority(userRole.getRoleId())));
 
             return new User(auth.getUserId(), passwordEncoder.encode(auth.getUserPwd()), authorities);
         }

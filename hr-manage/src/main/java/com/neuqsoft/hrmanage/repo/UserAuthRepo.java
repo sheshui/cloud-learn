@@ -1,6 +1,9 @@
 package com.neuqsoft.hrmanage.repo;
 
 import com.neuqsoft.hrmanage.entity.UserAuth;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -37,4 +40,7 @@ public interface UserAuthRepo extends JpaRepository<UserAuth, String> {
      * @return UserAuth 用户实体类
      */
     UserAuth findByUserPhone(String userPhone);
+
+
+    Page<UserAuth> findAll(Specification<UserAuth> spec, Pageable pageable);
 }

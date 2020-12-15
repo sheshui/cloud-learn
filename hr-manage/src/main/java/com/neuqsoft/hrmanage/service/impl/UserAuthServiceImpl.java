@@ -102,7 +102,6 @@ public class UserAuthServiceImpl implements UserAuthService {
         List<UserAuth> userAuths = reader.readAll(UserAuth.class);
         System.out.println("file处理：\n" + userAuths);
         userAuths.forEach(userAuth -> {
-//            userAuth.setCreaterId(userHolder.getUid());
             userAuth.setCreateTime(DateUtil.now());
             if (StringUtils.isEmpty(userAuth.getUserId())) {
                 userAuth.setUserId(UUID.fastUUID().toString(true));
@@ -140,6 +139,15 @@ public class UserAuthServiceImpl implements UserAuthService {
         BeanUtils.copyProperties(detail, userDetail);
         userDetailRepo.save(userDetail);
         return new ReturnMassage<>("0", "保存成功");
+    }
+
+    @Override
+    public Page<UserAuth> search(String param, String value, int pageNo, int pageSize) {
+        if (StringUtils.isEmpty(value)) {
+            return userAuthRepo.findAll(((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.isNull(root.get(param))), PageRequest.of(pageNo, pageSize));
+        } else {
+            return userAuthRepo.findAll((root, query, cb) -> cb.like(root.get(param), "%" + value + "%"), PageRequest.of(pageNo, pageSize));
+        }
     }
 
 
