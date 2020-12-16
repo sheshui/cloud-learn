@@ -10,6 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cloud-commons</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+    <name>cloud-commons</name>
+    <description>cloud commons module</description>
 
     <dependencies>
         <dependency>
@@ -21,7 +24,11 @@
             <artifactId>hutool-all</artifactId>
             <version>5.0.6</version>
         </dependency>
-
+        <!-- spring oauth2.0 (包含了spring security无需单独引入) 相关 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
         <!--        jpa-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -42,6 +49,10 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
     </dependencies>
 </project>

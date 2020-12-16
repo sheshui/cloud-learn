@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -45,6 +45,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private final AuthorizationCodeServices authorizationCodeServices;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     /**
      * token默认有效期2小时
      */
@@ -63,15 +66,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()// 使用本地存储
+        clients.inMemory()
+                // 使用本地存储
                 // 客户端id
                 .withClient("client_1")
                 // 客户端密码
-                .secret(new BCryptPasswordEncoder().encode("123456"))
+                .secret(passwordEncoder.encode("123456"))
                 // 客户端允许授权类型
                 .authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit", "refresh_token")
                 // 客户端允许授权范围
-                .scopes("all")
+                .scopes("all", "self")
                 // false跳转到授权页面，true不跳转，直接发令牌
                 .autoApprove(false);
     }

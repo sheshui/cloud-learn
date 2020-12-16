@@ -1,5 +1,6 @@
 package com.neuqsoft.hrmanage.api;
 
+import com.neuqsoft.hrmanage.config.user.UserHolder;
 import com.neuqsoft.hrmanage.dto.ReturnMassage;
 import com.neuqsoft.hrmanage.dto.UserDetailDto;
 import com.neuqsoft.hrmanage.entity.UserAuth;
@@ -30,6 +31,8 @@ public class UserAuthApi {
     private String serverPort;
     @Autowired
     UserAuthService authService;
+    @Autowired
+    UserHolder userHolder;
 
     @ApiOperation("保存用户信息")
 //    @ApiImplicitParam(name = "userAuth",value = "用户信息实体",required = true,paramType = "body")
@@ -75,6 +78,11 @@ public class UserAuthApi {
                                  @RequestParam(defaultValue = "0") int pageNo,
                                  @RequestParam(defaultValue = "10") int pageSize) {
         return authService.search(params, value, pageNo, pageSize);
+    }
+
+    @GetMapping("/auth")
+    public String authInfo() {
+        return userHolder.getUserDetail().toString();
     }
 //
 //    @ApiOperation("用户注册")

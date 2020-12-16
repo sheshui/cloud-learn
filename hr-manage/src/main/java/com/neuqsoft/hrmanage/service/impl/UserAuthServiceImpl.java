@@ -26,6 +26,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 用户服务实现类
@@ -69,13 +70,14 @@ public class UserAuthServiceImpl implements UserAuthService {
             System.out.println(userHolder.getUid());
             userId = userHolder.getUid();
         } catch (Exception e) {
+            e.printStackTrace();
             log.info("匿名用户注册中。。。");
         }
         if (StringUtils.isEmpty(userId)) {
             userId = UUID.fastUUID().toString(true);
-            userAuth.setUserId(userId);
+            userAuth.setCreaterId(userId);
         }
-        userAuth.setCreaterId(userId);
+        userAuth.setUserId(userId);
         userAuth.setCreateTime(DateUtil.now());
         userAuth.setUserStatus("1");
         userAuthRepo.save(userAuth);
@@ -150,12 +152,21 @@ public class UserAuthServiceImpl implements UserAuthService {
         }
     }
 
-
+    /**
+     * 查找用户名 -由创建者id查询创建人
+     *
+     * @param userId 用户id
+     * @return
+     */
     private String getUserName(String userId) {
         if (StringUtils.isEmpty(userId)) {
-            return null;
+            return userId;
         }
-        return userAuthRepo.findById(userId).get().getUserName();
+        Optional<UserAuth> userAuth = userAuthRepo.findById(userId);
+        if (userAuth.isPresent()) {
+            return userAuth.get().getUserName();
+        }
+        return userId;
     }
 
 
