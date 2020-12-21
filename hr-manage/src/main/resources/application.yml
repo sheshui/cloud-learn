@@ -18,6 +18,8 @@ spring:
   profiles:
     active: dev
     # 数据库配置
+  cache:
+    type: redis
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
@@ -49,5 +51,6 @@ spring:
     host: 81.70.14.217
     port: 16379
     password: '[370804sjr]'
+    database: 0
 
 

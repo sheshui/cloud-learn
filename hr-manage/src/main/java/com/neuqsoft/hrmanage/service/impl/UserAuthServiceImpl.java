@@ -16,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,6 +38,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
+@CacheConfig(cacheNames = "User")
 public class UserAuthServiceImpl implements UserAuthService {
     @Autowired
     UserAuthRepo userAuthRepo;
@@ -113,6 +116,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         return new ReturnMassage<>("0", "保存成功");
     }
 
+
     @Override
     public Page<UserAuth> findAll(int pageSize, int pageNo) {
         PageRequest request = PageRequest.of(pageNo, pageSize);
@@ -158,7 +162,8 @@ public class UserAuthServiceImpl implements UserAuthService {
      * @param userId 用户id
      * @return
      */
-    private String getUserName(String userId) {
+    @Cacheable(cacheNames = "userList", key = "#userId")
+    public String getUserName(String userId) {
         if (StringUtils.isEmpty(userId)) {
             return userId;
         }
@@ -168,6 +173,5 @@ public class UserAuthServiceImpl implements UserAuthService {
         }
         return userId;
     }
-
 
 }
