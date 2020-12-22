@@ -18,8 +18,11 @@ spring:
   profiles:
     active: dev
     # 数据库配置
-  cache:
-    type: redis
+  #  cache:
+  #    type: redis
+  #    cache-names: hr
+  #    redis:
+  #      time-to-live: 600000
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver

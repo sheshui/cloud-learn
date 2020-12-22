@@ -12,12 +12,11 @@ import com.neuqsoft.hrmanage.entity.UserDetail;
 import com.neuqsoft.hrmanage.repo.UserAuthRepo;
 import com.neuqsoft.hrmanage.repo.UserDetailRepo;
 import com.neuqsoft.hrmanage.service.UserAuthService;
+import com.neuqsoft.hrmanage.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +27,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 用户服务实现类
@@ -38,7 +36,6 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-@CacheConfig(cacheNames = "User")
 public class UserAuthServiceImpl implements UserAuthService {
     @Autowired
     UserAuthRepo userAuthRepo;
@@ -49,6 +46,9 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Autowired
     UserHolder userHolder;
+
+    @Autowired
+    UserService userService;
 
     /**
      * 保存用户信息
@@ -122,7 +122,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         PageRequest request = PageRequest.of(pageNo, pageSize);
         Page<UserAuth> page = userAuthRepo.findAll(request);
         page.getContent().forEach(userAuth -> {
-            String createName = getUserName(userAuth.getCreaterId());
+            String createName = userService.getUserName(userAuth.getCreaterId());
             userAuth.setCreaterId(StringUtils.isEmpty(createName) ? userAuth.getUserName() : createName);
         });
         return page;
@@ -156,22 +156,5 @@ public class UserAuthServiceImpl implements UserAuthService {
         }
     }
 
-    /**
-     * 查找用户名 -由创建者id查询创建人
-     *
-     * @param userId 用户id
-     * @return
-     */
-    @Cacheable(cacheNames = "userList", key = "#userId")
-    public String getUserName(String userId) {
-        if (StringUtils.isEmpty(userId)) {
-            return userId;
-        }
-        Optional<UserAuth> userAuth = userAuthRepo.findById(userId);
-        if (userAuth.isPresent()) {
-            return userAuth.get().getUserName();
-        }
-        return userId;
-    }
 
 }
