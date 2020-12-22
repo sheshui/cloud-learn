@@ -26,6 +26,7 @@ public class RedisCache {
                 .build();
     }
 
+
     //    @Bean
 //    public CacheManager cacheManager(RedisConnectionFactory connectionFactory){
 //        return RedisCacheManager.create(connectionFactory);
