@@ -9,12 +9,16 @@ import org.springframework.data.relational.core.mapping.Table
  * @date 2021/1/4
  * @description
  */
-@Table
+@Table("function")
 data class FunctionEntity(
     @Id
-    var id: String,
+    var id: Int,
 
-    var functionName: String,
+    var funcName: String,
 
-    var functionIcon: String
+    var funcIcon: String,
+
+    var isClose: Int,
+
+    var isAnonymous: Int
 )

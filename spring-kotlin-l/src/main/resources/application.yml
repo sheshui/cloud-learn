@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: "@project.name@"
+
+  r2dbc:
+    url: r2dbc:mysql://81.70.14.217:13306/hr?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: '[370804sjr]'
+server:
+  port: 8030

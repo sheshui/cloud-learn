@@ -23,6 +23,7 @@
         <module>cloud-commons</module>
         <module>auth-server</module>
         <module>webflux-learning</module>
+        <module>spring-kotlin-l</module>
     </modules>
 
     <properties>
