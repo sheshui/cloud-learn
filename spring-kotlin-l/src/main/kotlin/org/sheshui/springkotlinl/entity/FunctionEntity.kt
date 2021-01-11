@@ -1,4 +1,4 @@
-package org.sheshui.springkotlinl
+package org.sheshui.springkotlinl.entity
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table

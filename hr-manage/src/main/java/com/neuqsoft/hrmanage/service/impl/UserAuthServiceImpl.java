@@ -149,10 +149,21 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Override
     public Page<UserAuth> search(String param, String value, int pageNo, int pageSize) {
-        if (StringUtils.isEmpty(value)) {
-            return userAuthRepo.findAll(((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.isNull(root.get(param))), PageRequest.of(pageNo, pageSize));
+        if ("userName".equals(param)) {
+            return userAuthRepo.findAll(
+                    (root, query, cb) ->
+                            cb.like(root.get(param), "%" + value + "%"),
+                    PageRequest.of(pageNo, pageSize));
+        } else if (StringUtils.isEmpty(value)) {
+            return userAuthRepo.findAll((
+                            (root, criteriaQuery, criteriaBuilder) ->
+                                    criteriaBuilder.isNull(root.get(param))),
+                    PageRequest.of(pageNo, pageSize));
         } else {
-            return userAuthRepo.findAll((root, query, cb) -> cb.like(root.get(param), "%" + value + "%"), PageRequest.of(pageNo, pageSize));
+            return userAuthRepo.findAll(
+                    (root, query, cb) ->
+                            cb.like(root.get(param), "%" + value + "%"),
+                    PageRequest.of(pageNo, pageSize));
         }
     }
 

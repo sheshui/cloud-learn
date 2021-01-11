@@ -1,12 +1,13 @@
 package org.sheshui.springkotlinl.controller
 
-import org.sheshui.springkotlinl.FunctionEntity
-import org.sheshui.springkotlinl.FunctionRepo
+import org.sheshui.springkotlinl.entity.FunctionEntity
+import org.sheshui.springkotlinl.entity.UserAuth
+import org.sheshui.springkotlinl.repo.FunctionRepo
+import org.sheshui.springkotlinl.repo.UserAuthRepo
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.RestTemplate
 import reactor.core.publisher.Flux
-import reactor.kotlin.core.publisher.toMono
 
 /**
  *
@@ -15,7 +16,11 @@ import reactor.kotlin.core.publisher.toMono
  * @description
  */
 @RestController
-class MainController(val funcRepo: FunctionRepo, val restTemplate: RestTemplate) {
+class MainController(
+    val userAuthRepo: UserAuthRepo,
+    val funcRepo: FunctionRepo,
+    val restTemplate: RestTemplate
+) {
 
     @GetMapping
     fun sum(name: String): String {
@@ -26,7 +31,13 @@ class MainController(val funcRepo: FunctionRepo, val restTemplate: RestTemplate)
     @GetMapping("/func")
     fun all(): Flux<FunctionEntity> {
 
-        return funcRepo.findAll().flatMap { it.toMono() }
+        return funcRepo.findAll()
+    }
+
+    @GetMapping("/user")
+    fun userAll(): Flux<UserAuth> {
+
+        return userAuthRepo.findAll()
     }
 
 }
