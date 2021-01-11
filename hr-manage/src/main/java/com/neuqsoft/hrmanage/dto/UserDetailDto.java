@@ -6,6 +6,9 @@ import lombok.Data;
 
 import javax.persistence.Id;
 
+/**
+ * @author sunjiarui
+ */
 @Data
 @ApiModel("用户信息详情")
 public class UserDetailDto {

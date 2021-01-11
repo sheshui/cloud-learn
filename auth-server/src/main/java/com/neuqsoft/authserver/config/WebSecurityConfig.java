@@ -112,9 +112,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryAuthorizationCodeServices();
     }
 
-    //    /**
-//     * jwt token解析器
-//     */
+    /**
+     * jwt token解析器
+     */
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();

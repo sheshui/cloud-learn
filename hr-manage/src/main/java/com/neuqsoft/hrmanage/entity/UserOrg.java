@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "t_user_org")
 @ApiModel("用户和部门关系")
-public class TUserOrg implements Serializable {
+public class UserOrg implements Serializable {
     private static final long serialVersionUID = -33460793281538869L;
     @Id
     @ApiModelProperty("id")

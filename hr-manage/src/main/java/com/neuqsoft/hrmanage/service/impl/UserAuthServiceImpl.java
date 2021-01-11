@@ -78,9 +78,9 @@ public class UserAuthServiceImpl implements UserAuthService {
         }
         if (StringUtils.isEmpty(userId)) {
             userId = UUID.fastUUID().toString(true);
-            userAuth.setCreaterId(userId);
         }
         userAuth.setUserId(userId);
+        userAuth.setCreaterId(userId);
         userAuth.setCreateTime(DateUtil.now());
         userAuth.setUserStatus("1");
         userAuthRepo.save(userAuth);

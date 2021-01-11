@@ -7,7 +7,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * @author sunjiarui
  */
-//@EnableCaching
 @EnableDiscoveryClient
 @SpringBootApplication
 public class AuthServerApplication {

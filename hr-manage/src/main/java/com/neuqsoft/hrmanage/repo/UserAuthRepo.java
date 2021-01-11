@@ -41,6 +41,12 @@ public interface UserAuthRepo extends JpaRepository<UserAuth, String> {
      */
     UserAuth findByUserPhone(String userPhone);
 
-
+    /**
+     * 搜索所有符合条件的用户信息
+     *
+     * @param spec     条件语句
+     * @param pageable 分页信息
+     * @return 用户分页表
+     */
     Page<UserAuth> findAll(Specification<UserAuth> spec, Pageable pageable);
 }

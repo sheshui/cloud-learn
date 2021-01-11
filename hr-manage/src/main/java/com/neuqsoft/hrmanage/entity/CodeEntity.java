@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author sunjiarui
+ */
 @Data
 @ApiModel("数据字典")
 @Entity
