@@ -32,11 +32,13 @@ public interface UserAuthService {
      */
     ReturnMassage<String> saveUserAuths(List<UserAuth> userAuths);
 
+
     /**
      * 批量导入用户-传入excle文件
      *
      * @param file excle文件
      * @return 导入结果
+     * @throws IOException io异常
      */
     ReturnMassage<String> saveUserAuths(MultipartFile file) throws IOException;
 
@@ -66,6 +68,15 @@ public interface UserAuthService {
      */
     ReturnMassage<String> saveUserDetail(UserDetailDto detail);
 
+    /**
+     * 搜索查询
+     *
+     * @param param    属性
+     * @param value    关键字
+     * @param pageNo   页码
+     * @param pageSize 页大小
+     * @return 分页信息
+     */
     Page<UserAuth> search(String param, String value, int pageNo, int pageSize);
 
 //    Page<UserAuth>

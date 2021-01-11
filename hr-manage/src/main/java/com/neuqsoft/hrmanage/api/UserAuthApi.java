@@ -35,7 +35,6 @@ public class UserAuthApi {
     UserHolder userHolder;
 
     @ApiOperation("保存用户信息")
-//    @ApiImplicitParam(name = "userAuth",value = "用户信息实体",required = true,paramType = "body")
     @PostMapping("/anonymous/signup")
     public ReturnMassage<String> saveUserAuth(@RequestBody UserAuth userAuth) {
         return authService.saveUserAuth(userAuth);
@@ -84,23 +83,6 @@ public class UserAuthApi {
     public String authInfo() {
         return userHolder.getUserDetail().toString();
     }
-//
-//    @ApiOperation("用户注册")
-//    @PostMapping("/anonymous/register")
-//    public ReturnMassage<String> register(@RequestBody UserAuth userAuth){
-//        return authService.saveUserAuth(userAuth);
-//    }
 
 
-//    @ApiOperation("配置中心验证")
-//    @GetMapping("/config")
-//    public ReturnMassage<String> getConfig() {
-//        return new ReturnMassage<>("0", "成功", userId);
-//    }
-//
-//    @ApiOperation("访问的端口")
-//    @GetMapping("/port")
-//    public ReturnMassage getServerPort() {
-//        return new ReturnMassage("0", "成功", serverPort);
-//    }
 }
