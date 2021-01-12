@@ -19,7 +19,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "user_auth")
 @ApiModel("用户实体类")
-//@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class UserAuth implements Serializable {
     private static final long serialVersionUID = -37766015161026030L;
     /**
@@ -27,7 +26,6 @@ public class UserAuth implements Serializable {
      */
     @Id
     @ApiModelProperty("用户主键")
-//    @GeneratedValue(generator = "jpa-uuid")
     private String userId;
     /**
      * 用户名

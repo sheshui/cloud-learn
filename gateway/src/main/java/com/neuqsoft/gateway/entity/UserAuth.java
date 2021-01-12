@@ -56,39 +56,4 @@ public class UserAuth implements Serializable {
      */
     @ApiModelProperty("用户状态")
     private String userStatus;
-//
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return null;
-//    }
-//
-//    @Override
-//    public String getPassword() {
-//        return this.userPwd;
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return this.userName;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return !"0".equals(this.userStatus);
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return !"2".equals(this.userStatus);
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return "1".equals(this.userStatus);
-//    }
 }
