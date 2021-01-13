@@ -37,4 +37,10 @@ public class UserDetail implements Serializable {
      */
     @ApiModelProperty("用户生日")
     private String userBirthday;
+
+    private String userRelName;
+
+    private String userSign;
+
+    private String userSex;
 }

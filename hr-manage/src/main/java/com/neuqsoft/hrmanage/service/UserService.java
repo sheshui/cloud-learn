@@ -1,5 +1,7 @@
 package com.neuqsoft.hrmanage.service;
 
+import com.neuqsoft.hrmanage.dto.UserDetailDto;
+
 /**
  * @author sunjiarui
  */
@@ -11,4 +13,6 @@ public interface UserService {
      * @return
      */
     String getUserName(String userId);
+
+    UserDetailDto getUserDetail(String userId);
 }

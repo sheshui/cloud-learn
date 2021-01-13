@@ -27,4 +27,10 @@ public class ReturnMassage<T> {
         this.code = code;
         this.msg = msg;
     }
+
+    public ReturnMassage(String code, String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
 }

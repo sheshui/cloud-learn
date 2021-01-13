@@ -1,5 +1,6 @@
 package com.neuqsoft.hrmanage.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -32,6 +33,7 @@ public class UserDetailDto {
      * 用户密码
      */
     @ApiModelProperty("用户密码")
+    @JsonIgnore
     private String userPwd;
     /**
      * 用户头像
@@ -43,4 +45,10 @@ public class UserDetailDto {
      */
     @ApiModelProperty("用户生日")
     private String userBirthday;
+
+    private String userRelName;
+
+    private String userSign;
+
+    private String userSex;
 }

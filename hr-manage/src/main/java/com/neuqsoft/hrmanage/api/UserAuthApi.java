@@ -80,7 +80,7 @@ UserAuthService authService;
 
     @GetMapping("/auth")
     public String authInfo() {
-        return userHolder.getUserDetail().toString();
+        return userHolder.getUid();
     }
 
 
