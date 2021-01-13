@@ -83,6 +83,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         userAuth.setCreaterId(userId);
         userAuth.setCreateTime(DateUtil.now());
         userAuth.setUserStatus("1");
+        log.info("{}", userAuth);
         userAuthRepo.save(userAuth);
         return new ReturnMassage<>("0", "保存成功");
     }
@@ -149,22 +150,30 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Override
     public Page<UserAuth> search(String param, String value, int pageNo, int pageSize) {
+        log.info(param + "|||" + value);
+        Page<UserAuth> page;
         if ("userName".equals(param)) {
-            return userAuthRepo.findAll(
+            page = userAuthRepo.findAll(
                     (root, query, cb) ->
                             cb.like(root.get(param), "%" + value + "%"),
                     PageRequest.of(pageNo, pageSize));
         } else if (StringUtils.isEmpty(value)) {
-            return userAuthRepo.findAll((
+            page = userAuthRepo.findAll((
                             (root, criteriaQuery, criteriaBuilder) ->
                                     criteriaBuilder.isNull(root.get(param))),
                     PageRequest.of(pageNo, pageSize));
         } else {
-            return userAuthRepo.findAll(
+            page = userAuthRepo.findAll(
                     (root, query, cb) ->
                             cb.like(root.get(param), "%" + value + "%"),
                     PageRequest.of(pageNo, pageSize));
         }
+        page.getContent().forEach(userAuth -> {
+            String createName = userService.getUserName(userAuth.getCreaterId());
+            userAuth.setCreaterId(StringUtils.isEmpty(createName) ? userAuth.getUserName() : createName);
+        });
+        log.info("{}", page.getContent());
+        return page;
     }
 
 

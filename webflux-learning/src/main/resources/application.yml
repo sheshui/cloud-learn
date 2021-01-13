@@ -4,7 +4,6 @@ info:
     name: "@project.name@"
     description: "@project.description@"
     version: "@project.version@"
-
 spring:
   application:
     name: "@project.name@"
@@ -15,4 +14,6 @@ spring:
     password: '[370804sjr]'
 #logging:
 #  level:
+server:
+  port: 8040
 #    root: debug

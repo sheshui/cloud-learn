@@ -8,7 +8,6 @@ import com.neuqsoft.hrmanage.service.UserAuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,17 +24,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 public class UserAuthApi {
-    @Value("${user.id}")
-    private String userId;
-    @Value("${server.port}")
-    private String serverPort;
-    @Autowired
-    UserAuthService authService;
+//    @Value("${user.id}")
+//    private String userId;
+//    @Value("${server.port}")
+//    private String serverPort;
+@Autowired
+UserAuthService authService;
     @Autowired
     UserHolder userHolder;
 
     @ApiOperation("保存用户信息")
-    @PostMapping("/anonymous/signup")
+    @PostMapping("/add")
     public ReturnMassage<String> saveUserAuth(@RequestBody UserAuth userAuth) {
         return authService.saveUserAuth(userAuth);
     }
@@ -71,7 +70,7 @@ public class UserAuthApi {
         return authService.saveUserDetail(detailDto);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/manage/search")
     public Page<UserAuth> search(@RequestParam(defaultValue = "userName") String params,
                                  @RequestParam(required = false) String value,
                                  @RequestParam(defaultValue = "0") int pageNo,

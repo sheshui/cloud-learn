@@ -1,6 +1,8 @@
 package com.neuqsoft.webfluxlearning.api
 
+import com.neuqsoft.webfluxlearning.entity.Icon
 import com.neuqsoft.webfluxlearning.entity.UserAuth
+import com.neuqsoft.webfluxlearning.repo.IconRepo
 import com.neuqsoft.webfluxlearning.repo.UserAuthRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.r2dbc.core.DatabaseClient
@@ -18,6 +20,9 @@ import javax.annotation.Resource
 class MainController {
     @Autowired
     lateinit var userAuthRepo: UserAuthRepo
+
+    @Autowired
+    lateinit var iconRepo: IconRepo
 
     @Resource
     var dbClient: DatabaseClient? = null
@@ -39,4 +44,10 @@ class MainController {
     @get:GetMapping("/userNames")
     val userName: Flux<String>
         get() = userAuthRepo.findAll().map { it?.userName }
+
+    @GetMapping("/icon/list")
+    fun icon(): Flux<Icon?> {
+        return iconRepo.findAll()
+    }
+
 }

@@ -50,7 +50,7 @@ spring:
           filters:
             - StripPrefix=1
         - id: webfluxL
-          uri: lb://webflux
+          uri: lb://webflux-learning
           predicates:
             - Path=/f/**
           filters:
