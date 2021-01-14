@@ -69,7 +69,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         return accessTokenConverter;
     }
 
-
+    /**
+     * 加密器
+     *
+     * @return
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();

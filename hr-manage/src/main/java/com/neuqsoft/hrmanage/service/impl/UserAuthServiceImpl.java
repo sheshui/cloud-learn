@@ -87,6 +87,12 @@ public class UserAuthServiceImpl implements UserAuthService {
         userAuth.setUserStatus("1");
         log.info("{}", userAuth);
         userAuthRepo.save(userAuth);
+
+
+        UserDetail userDetail = new UserDetail();
+        userDetail.setUserId(userAuth.getUserId());
+        userDetail.setUserAvatar("http://81.70.14.217/project-new/static/images/icon/g1.ico");
+        userDetailRepo.save(userDetail);
         return new ReturnMassage<>("0", "保存成功");
     }
 
