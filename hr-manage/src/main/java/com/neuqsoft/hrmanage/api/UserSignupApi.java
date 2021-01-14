@@ -1,6 +1,7 @@
 package com.neuqsoft.hrmanage.api;
 
 
+import com.neuqsoft.hrmanage.dto.ChangePwdDto;
 import com.neuqsoft.hrmanage.dto.ReturnMassage;
 import com.neuqsoft.hrmanage.dto.UserDetailDto;
 import com.neuqsoft.hrmanage.entity.UserAuth;
@@ -34,5 +35,15 @@ public class UserSignupApi {
     public ReturnMassage<UserDetailDto> getUserDetail(@RequestParam String userId) {
         System.out.println(userId);
         return new ReturnMassage<>("0", "获取成功", userService.getUserDetail(userId));
+    }
+
+    @PostMapping("/api/user/detail")
+    public ReturnMassage<String> saveUserDetail(@RequestBody UserDetailDto userDetailDto) {
+        return userService.saveUserDetail(userDetailDto);
+    }
+
+    @PostMapping("/api/user/change/password")
+    public ReturnMassage<String> changePwd(@RequestBody ChangePwdDto changePwdDto) {
+        return userService.changePwd(changePwdDto);
     }
 }

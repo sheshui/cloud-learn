@@ -19,6 +19,8 @@ public class UserDetailDto {
     @Id
     @ApiModelProperty("用户id")
     private String userId;
+
+    private String userName;
     /**
      * 用户手机号
      */

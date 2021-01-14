@@ -68,19 +68,21 @@ public class UserAuthServiceImpl implements UserAuthService {
             return new ReturnMassage<>("-1", "手机号已存在");
         }
         userAuth.setUserPwd(passwordEncoder.encode(userAuth.getUserPwd()));
-        String userId = "";
+        String modifyId = "";
         try {
             System.out.println(userHolder.getUid());
-            userId = userHolder.getUid();
+            modifyId = userHolder.getUid();
         } catch (Exception e) {
             e.printStackTrace();
             log.info("匿名用户注册中。。。");
         }
-        if (StringUtils.isEmpty(userId)) {
-            userId = UUID.fastUUID().toString(true);
+        if (StringUtils.isEmpty(modifyId)) {
+            modifyId = UUID.fastUUID().toString(true);
         }
-        userAuth.setUserId(userId);
-        userAuth.setCreaterId(userId);
+        if (StringUtils.isEmpty(userAuth.getUserId())) {
+            userAuth.setUserId(modifyId);
+        }
+        userAuth.setCreaterId(modifyId);
         userAuth.setCreateTime(DateUtil.now());
         userAuth.setUserStatus("1");
         log.info("{}", userAuth);

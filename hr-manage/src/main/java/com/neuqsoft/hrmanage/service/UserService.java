@@ -1,5 +1,7 @@
 package com.neuqsoft.hrmanage.service;
 
+import com.neuqsoft.hrmanage.dto.ChangePwdDto;
+import com.neuqsoft.hrmanage.dto.ReturnMassage;
 import com.neuqsoft.hrmanage.dto.UserDetailDto;
 
 /**
@@ -15,4 +17,8 @@ public interface UserService {
     String getUserName(String userId);
 
     UserDetailDto getUserDetail(String userId);
+
+    ReturnMassage<String> saveUserDetail(UserDetailDto userDetailDto);
+
+    ReturnMassage<String> changePwd(ChangePwdDto changePwdDto);
 }

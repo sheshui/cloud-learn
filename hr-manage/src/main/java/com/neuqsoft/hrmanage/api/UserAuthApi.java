@@ -2,7 +2,6 @@ package com.neuqsoft.hrmanage.api;
 
 import com.neuqsoft.hrmanage.config.user.UserHolder;
 import com.neuqsoft.hrmanage.dto.ReturnMassage;
-import com.neuqsoft.hrmanage.dto.UserDetailDto;
 import com.neuqsoft.hrmanage.entity.UserAuth;
 import com.neuqsoft.hrmanage.service.UserAuthService;
 import io.swagger.annotations.Api;
@@ -34,7 +33,7 @@ UserAuthService authService;
     UserHolder userHolder;
 
     @ApiOperation("保存用户信息")
-    @PostMapping("/add")
+    @PostMapping("/manage/add")
     public ReturnMassage<String> saveUserAuth(@RequestBody UserAuth userAuth) {
         return authService.saveUserAuth(userAuth);
     }
@@ -64,11 +63,11 @@ UserAuthService authService;
     public ReturnMassage<String> delSelf(@RequestBody String userId) {
         return authService.delUser(Collections.singletonList(userId));
     }
-
-    @PostMapping("/detail")
-    public ReturnMassage<String> saveDetails(UserDetailDto detailDto) {
-        return authService.saveUserDetail(detailDto);
-    }
+//
+//    @PostMapping("/detail")
+//    public ReturnMassage<String> saveDetails(UserDetailDto detailDto) {
+//        return authService.saveUserDetail(detailDto);
+//    }
 
     @GetMapping("/manage/search")
     public Page<UserAuth> search(@RequestParam(defaultValue = "userName") String params,
