@@ -34,8 +34,13 @@ UserAuthService authService;
 
     @ApiOperation("保存用户信息")
     @PostMapping("/manage/add")
-    public ReturnMassage<String> saveUserAuth(@RequestBody UserAuth userAuth) {
+    public ReturnMassage<String> addUserAuth(@RequestBody UserAuth userAuth) {
         return authService.saveUserAuth(userAuth);
+    }
+
+    @PostMapping("/manage/save")
+    public ReturnMassage<String> saveUserAuth(@RequestBody UserAuth user) {
+        return authService.saveUser(user);
     }
 
     @GetMapping("/manage/batch")

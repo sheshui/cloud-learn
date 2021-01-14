@@ -184,5 +184,11 @@ public class UserAuthServiceImpl implements UserAuthService {
         return page;
     }
 
+    @Override
+    public ReturnMassage<String> saveUser(UserAuth user) {
+        userAuthRepo.save(user);
+        return new ReturnMassage<>("0", "保存成功");
+    }
+
 
 }

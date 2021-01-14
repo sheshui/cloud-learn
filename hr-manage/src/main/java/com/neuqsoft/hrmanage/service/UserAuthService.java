@@ -79,5 +79,13 @@ public interface UserAuthService {
      */
     Page<UserAuth> search(String param, String value, int pageNo, int pageSize);
 
+    /**
+     * 保存用户
+     *
+     * @param user 保存用户
+     * @return 结果
+     */
+    ReturnMassage<String> saveUser(UserAuth user);
+
 //    Page<UserAuth>
 }
